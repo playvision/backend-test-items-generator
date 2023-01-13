@@ -9,7 +9,7 @@ colors = open(colorsFile, "r").readlines()
 adjectives = open(adjectivesFile, "r").readlines()
 items = open(itemsFile, "r").readlines()
 
-needToCreate = sys.argv[1]
+needToCreate = int(sys.argv[1])
 canCreate = len(colors)*len(adjectives)*len(items)
 
 print("Can create {} unic items ids".format(canCreate))
@@ -19,16 +19,18 @@ if canCreate < int(needToCreate):
     print("Require number of generated items is too large")
     exit()
 
-result = []
+generated = []
 
 for color in colors:
     for adjective in adjectives:
         for item in items:
             id = (color+"_"+adjective+"_"+item).replace("\n", "")
-            result.append(id)
+            generated.append(id)
 
-random.shuffle(result)
+random.shuffle(generated)
 
-with open("result.txt", "a") as f:
-    f.truncate(0)  # need '0' when using r+
-    f.writelines('\n'.join(result))
+result = generated[:needToCreate]
+
+with open("result.txt", "w") as f:
+    for line in result:
+        f.write(f"{line}\n")
