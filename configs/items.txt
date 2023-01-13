@@ -1,0 +1,4 @@
+swoard
+helmet
+stone
+card
